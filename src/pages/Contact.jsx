@@ -43,7 +43,7 @@ const Contact = () => {
   const socials = [
     { icon: <FaInstagram />, label: "Instagram", href: "https://www.instagram.com/astra.club.bmsit/" },
     { icon: <FaLinkedin />, label: "LinkedIn", href: "https://www.linkedin.com/company/110203875/" },
-    { icon: <FaWhatsapp />, label: "Whatsapp", href: "https://chat.whatsapp.com/Gql6zNG43NZ1By19sARbC5" },
+    { icon: <FaWhatsapp />, label: "Whatsapp", href: "https://chat.whatsapp.com/I09rR6L6eRcJnKyyFFgsl6?s=cl&p=i&mlu=4&ilr=4" },
   ];
 
   return (
@@ -52,7 +52,7 @@ const Contact = () => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       exit={{ opacity: 0 }}
-      className="container mx-auto px-6 py-20"
+      className="container mx-auto px-6 py-20 holographic-section"
       id="contact"
     >
       <div className="text-center mb-16">

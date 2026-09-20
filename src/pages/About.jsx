@@ -72,7 +72,7 @@ const About = () => {
       whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
       exit={{ opacity: 0 }}
-      className="container mx-auto px-6 py-20"
+      className="container mx-auto px-6 py-20 holographic-section"
       id="about"
     >
       {/* Section A - BMSIT */}
@@ -144,7 +144,7 @@ const About = () => {
         </motion.div>
 
         {/* What We Do */}
-        <div className="mb-32">
+        <div className="mb-32 holographic-grid-zone">
           <motion.div variants={itemVariants} className="flex items-center space-x-4 mb-12 justify-center">
             <div className="h-[2px] w-12 bg-accent-orange" />
             <h3 className="text-3xl font-orbitron tracking-widest text-text-primary uppercase">What We Do</h3>
