@@ -27,7 +27,7 @@ const Event = () => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       exit={{ opacity: 0 }}
-      className="container mx-auto px-6 py-20"
+      className="container mx-auto px-6 py-20 holographic-section holographic-grid-zone"
       id="domains"
     >
       {/* Overview */}
