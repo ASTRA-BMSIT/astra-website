@@ -1,43 +1,43 @@
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @theme {
-  --color-bg-base: #0A0A0A;
-  --color-bg-surface: #141414;
-  --color-bg-elevated: #1C1C1C;
-  --color-accent-orange: #FF6B00;
-  --color-accent-amber: #FF9500;
-  --color-brand-devfolio: #3770FF;
-  --color-text-primary: #FFFFFF;
-  --color-text-muted: #9CA3AF;
-  --color-custom-border: #2A2A2A;
+  --color-bg-base: #070706;
+  --color-bg-surface: #130f0c;
+  --color-bg-elevated: #1d1914;
+  --color-accent-orange: #f3d38b;
+  --color-accent-amber: #fff4d6;
+  --color-brand-devfolio: #d4af67;
+  --color-text-primary: #f6f1e8;
+  --color-text-muted: #d9ccb0;
+  --color-custom-border: rgba(218, 179, 82, 0.25);
 
-  --font-orbitron: "Orbitron", sans-serif;
-  --font-rajdhani: "Rajdhani", sans-serif;
-  --font-inter: "Inter", sans-serif;
+  --font-orbitron: "Space Grotesk", sans-serif;
+  --font-rajdhani: "DM Sans", sans-serif;
+  --font-inter: "DM Sans", sans-serif;
 
   --tracking-tactical: 0.08em;
   --tracking-badge: 0.12em;
 
   @keyframes glow {
-    0%, 100% { box-shadow: 0 0 5px rgba(255, 107, 0, 0.2); }
-    50% { box-shadow: 0 0 20px rgba(255, 107, 0, 0.6); }
+    0%, 100% { box-shadow: 0 0 4px rgba(243, 211, 139, 0.18); }
+    50% { box-shadow: 0 0 14px rgba(243, 211, 139, 0.5); }
   }
 }
 
 /* Base Styles */
 @layer base {
   :root {
-    --bg-base: #0A0A0A;
-    --bg-surface: #141414;
-    --bg-elevated: #1C1C1C;
-    --accent-orange: #FF6B00;
-    --accent-amber: #FF9500;
-    --brand-devfolio: #3770FF;
-    --text-primary: #FFFFFF;
-    --text-muted: #9CA3AF;
-    --border: #2A2A2A;
+    --bg-base: #070706;
+    --bg-surface: #130f0c;
+    --bg-elevated: #1d1914;
+    --accent-orange: #f3d38b;
+    --accent-amber: #fff4d6;
+    --brand-devfolio: #d4af67;
+    --text-primary: #f6f1e8;
+    --text-muted: #d9ccb0;
+    --border: rgba(218, 179, 82, 0.25);
   }
 
   html {
@@ -45,13 +45,14 @@
   }
 
   body {
-    background-color: var(--bg-base);
+    background: #070706;
     color: var(--text-primary);
     font-family: var(--font-inter);
     margin: 0;
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
+    background-attachment: fixed;
   }
 
   /* Section spacing for single-page flow */
@@ -61,8 +62,7 @@
 
   h1, h2 {
     font-family: var(--font-orbitron);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-tactical);
+    letter-spacing: -0.04em;
   }
 
   h3, h4 {
@@ -91,8 +91,8 @@
 
 /* Scanline Effect */
 body::after {
-  content: " ";
-  display: block;
+  content: none;
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -106,17 +106,17 @@ body::after {
   background-size: 100% 4px;
   z-index: 100;
   pointer-events: none;
-  opacity: 0.08;
+  opacity: 0.025;
 }
 
 /* Hex-grid SVG pattern overlay */
 .hex-grid-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cpath fill='%23FF6B00' fill-opacity='0.03' d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9L13.99 11.5l11 6.35v12.7l-11 6.35L3 30.55v-12.65z'/%3E%3C/svg%3E");
+  background-image: linear-gradient(rgba(243,211,139,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(243,211,139,.04) 1px, transparent 1px);
+  background-size: 48px 48px;
   pointer-events: none;
   z-index: 0;
 }
@@ -155,3 +155,12 @@ body::after {
 ::-webkit-scrollbar-thumb:hover {
   background: #FF6B00;
 }
+
+/* ASTRA redesign */
+::selection { background: var(--accent-orange); color: var(--bg-base); }
+button { font: inherit; }
+
+/* Hyper redesign overrides */
+body { background:#050505; }
+body::after { opacity:.025; }
+::selection { background:#FF6B00; color:#050505; }

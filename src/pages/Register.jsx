@@ -2,45 +2,62 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { HiArrowRight } from 'react-icons/hi';
 
+const APPLY_URL = 'https://forms.gle/EALvMDj2SKFrY9jXA';
+
 const Register = () => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
+    <motion.section
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-100px' }}
-      exit={{ opacity: 0 }}
-      className="container mx-auto px-6 py-32 relative"
+      viewport={{ once: true, margin: '-80px' }}
+      className="hiring-section"
       id="register"
     >
-      <div className="text-center mb-16 relative z-10">
-        <span className="font-rajdhani text-accent-orange/60 tracking-[0.4em] uppercase text-xs mb-4 block font-black">
-          Start_With_ASTRA
-        </span>
-        <h1 className="text-4xl md:text-7xl font-orbitron font-black mb-4 tracking-tighter italic">
-          JOIN <span className="text-accent-orange">ASTRA</span>
-        </h1>
-        <span className="inline-block bg-accent-orange text-bg-base text-2xl sm:text-3xl md:text-4xl tracking-widest px-4 sm:px-5 py-2 mb-6 font-orbitron font-black uppercase">
-          WE ARE HIRING
-        </span>
-        <p className="max-w-2xl mx-auto text-text-muted font-inter text-lg leading-relaxed">
-          Be part of a student-led club building awareness, practical expertise, and meaningful connections across the defence technology ecosystem.
-        </p>
-        <div className="w-24 h-1 bg-accent-orange mx-auto mt-8" />
+      <div className="hiring-topline">
+        <span>03 / JOIN ASTRA</span>
+        <span>OPEN INTAKE // 2026</span>
       </div>
 
-      <div className="flex justify-center relative z-10 mb-12">
-        <a
-          href="https://forms.gle/EALvMDj2SKFrY9jXA"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-3 px-10 py-5 bg-accent-orange text-bg-base font-orbitron font-black tracking-widest uppercase hover:bg-accent-amber transition-all shadow-[0_0_30px_rgba(255,107,0,0.2)]"
-        >
-          APPLY HERE
-          <HiArrowRight />
-        </a>
-      </div>
+      <div className="hiring-grid">
+        <div className="hiring-copy">
+          <span className="hiring-kicker">ASTRA // RECRUITMENT</span>
+          <h2>
+            WE ARE <span>HIRING.</span>
+          </h2>
+          <p>
+            Build with us. Join a student-led defence-tech collective working across aerospace,
+            robotics, AI/ML and cyber/RF.
+          </p>
+          <a
+            href={APPLY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hiring-apply"
+          >
+            APPLY HERE <HiArrowRight />
+          </a>
+        </div>
 
-    </motion.div>
+        <div className="hiring-panel" aria-label="ASTRA recruitment information">
+          <div className="hiring-panel-head">
+            <span>APPLICATION PORTAL</span>
+            <b><i /> OPEN</b>
+          </div>
+          <div className="hiring-scan" />
+          <div className="hiring-panel-body">
+            <div className="hiring-mark">A</div>
+            <div>
+              <strong>READY TO BUILD?</strong>
+              <span>Applications are open. The form opens directly in a new tab.</span>
+            </div>
+          </div>
+          <div className="hiring-panel-foot">
+            <span>NO INTERMEDIATE STEPS</span>
+            <span>SECURE EXTERNAL FORM ↗</span>
+          </div>
+        </div>
+      </div>
+    </motion.section>
   );
 };
 

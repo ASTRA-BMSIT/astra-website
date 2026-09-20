@@ -117,12 +117,14 @@ const Navbar = () => {
 
         {/* Right: Action Buttons */}
         <div className="flex items-center space-x-3 shrink-0">
-          <button
-            onClick={() => handleLinkClick('/#register')}
+          <a
+            href="https://forms.gle/EALvMDj2SKFrY9jXA"
+            target="_blank"
+            rel="noopener noreferrer"
             className="px-4 py-2 bg-accent-orange text-bg-base font-orbitron text-[10px] font-black tracking-widest hover:scale-105 transition-all rounded-full shadow-[0_0_15px_rgba(255,107,0,0.3)]"
           >
-            REGISTER
-          </button>
+            WE'RE HIRING
+          </a>
         </div>
       </motion.nav>
 
