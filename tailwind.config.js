@@ -17,9 +17,9 @@ export default {
         'custom-border': "#2A2A2A",
       },
       fontFamily: {
-        orbitron: ["Orbitron", "sans-serif"],
-        rajdhani: ["Rajdhani", "sans-serif"],
-        inter: ["Inter", "sans-serif"],
+        orbitron: ["Roboto", "sans-serif"],
+        rajdhani: ["Nata Sans", "sans-serif"],
+        inter: ["Nata Sans", "sans-serif"],
       },
       letterSpacing: {
         'tactical': '0.08em',

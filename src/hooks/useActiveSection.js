@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 /**
  * useActiveSection
@@ -21,21 +21,19 @@ const useActiveSection = (sectionIds) => {
         return;
       }
 
-      // Find the section that currently contains the middle of the viewport
-      let currentSection = '';
-      for (const id of sectionIds) {
-        const element = document.getElementById(id);
-        if (element) {
-          const { top, bottom } = element.getBoundingClientRect();
-          const absoluteTop = top + window.scrollY;
-          const absoluteBottom = bottom + window.scrollY;
-          
-          if (scrollPosition >= absoluteTop && scrollPosition <= absoluteBottom) {
-            currentSection = id;
-            break;
-          }
-        }
-      }
+      // Prefer the smallest matching section so nested anchors such as
+      // #about and #domains take precedence over the #home page wrapper.
+      // Check every matching element because some page sections share IDs.
+      const trackedIds = new Set(sectionIds);
+      const currentSection = [...document.querySelectorAll('[id]')]
+        .filter((element) => trackedIds.has(element.id))
+        .map((element) => ({
+          id: element.id,
+          bounds: element.getBoundingClientRect(),
+        }))
+        .filter(({ bounds }) => scrollPosition >= bounds.top + window.scrollY
+          && scrollPosition <= bounds.bottom + window.scrollY)
+        .sort((a, b) => a.bounds.height - b.bounds.height)[0]?.id || '';
 
       if (currentSection && currentSection !== activeId) {
         setActiveId(currentSection);

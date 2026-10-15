@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Nata+Sans:wght@100..900&family=Roboto:wght@100..900&display=swap');
 
 @theme {
   --color-bg-base: #070706;
@@ -13,9 +13,9 @@
   --color-text-muted: #d9ccb0;
   --color-custom-border: rgba(218, 179, 82, 0.25);
 
-  --font-orbitron: "Space Grotesk", sans-serif;
-  --font-rajdhani: "DM Sans", sans-serif;
-  --font-inter: "DM Sans", sans-serif;
+  --font-orbitron: "Roboto", sans-serif;
+  --font-rajdhani: "Nata Sans", sans-serif;
+  --font-inter: "Nata Sans", sans-serif;
 
   --tracking-tactical: 0.08em;
   --tracking-badge: 0.12em;
@@ -66,8 +66,12 @@
   }
 
   h3, h4 {
-    font-family: var(--font-rajdhani);
+    font-family: var(--font-orbitron);
     font-weight: 600;
+  }
+
+  h5, h6 {
+    font-family: var(--font-orbitron);
   }
 }
 
