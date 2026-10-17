@@ -6,3 +6,5 @@ dist/
 venv/
 .mcp.json
 design.md
+AGENTS.md
+Skills/
