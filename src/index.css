@@ -68,6 +68,11 @@
   --color-bg-base: #070706;
   --color-bg-surface: #130f0c;
   --color-bg-elevated: #1d1914;
+  --color-gold: #f3d38b;
+  --color-gold-bright: #fce9b0;
+  --color-cream: #fff4d6;
+  --color-cyan: #f3d38b; /* Protected alias: always warm gold */
+  --color-coral: #fff4d6; /* Protected alias: always warm cream */
   --color-accent-orange: #f3d38b; /* actual gold — matched to --gold      */
   --color-accent-amber: #fff4d6;
   --color-brand-devfolio: #d4af67;
@@ -76,6 +81,9 @@
   --color-custom-border: rgba(243, 211, 139, 0.22);
 
   /* Fonts mapped to Tailwind utilities */
+  --font-display: "Sora", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-sans: "Inter", sans-serif;
   --font-sora: "Sora", sans-serif;
   --font-inter: "Inter", sans-serif;
   --font-mono: "JetBrains Mono", monospace;

@@ -7,6 +7,7 @@ import HyperText from '../components/ui/HyperText';
 import ShimmerButton from '../components/ui/ShimmerButton';
 import TiltCard from '../components/ui/TiltCard';
 import MagicCard from '../components/ui/MagicCard';
+import MissionControlSequence from '../components/ui/MissionControlSequence';
 
 /* ── Domain data ──────────────────────────────────────────── */
 const domains = [
@@ -202,34 +203,13 @@ export default function Home() {
               </motion.div>
             </div>
 
-            {/* RIGHT — Status panel (parallax, slower scroll) */}
+            {/* RIGHT — Scroll-bound Mission Control Sequence (scrubs through /astra_break/ frames) */}
             <motion.div
               className="hero-flight"
               style={{ y: heroVisualY }}
             >
               <TiltCard maxTilt={6} scale={1.01}>
-                <div className="status-panel" aria-label="Mission control status">
-                  <div className="status-panel-head">
-                    <span>NX-01 // MISSION CONTROL</span>
-                    <b><i /> ONLINE</b>
-                  </div>
-                  <div className="status-panel-body">
-                    <div className="status-emblem">
-                      <span>A</span><small>ASTRA</small>
-                    </div>
-                    <div className="status-copy">
-                      <small>ORBITAL DEFENCE NETWORK</small>
-                      <strong>SECURE LINK<br />ESTABLISHED</strong>
-                      <div className="status-line"><span>NODE</span><b>BLR-01</b></div>
-                      <div className="status-line"><span>ALTITUDE</span><b>408 KM</b></div>
-                      <div className="status-line"><span>READINESS</span><b>94%</b></div>
-                    </div>
-                  </div>
-                  <div className="status-panel-foot">
-                    <span>VECTOR  /  18.4°</span>
-                    <span>TRACKING  /  ACTIVE</span>
-                  </div>
-                </div>
+                <MissionControlSequence targetRef={heroRef} />
               </TiltCard>
             </motion.div>
           </div>

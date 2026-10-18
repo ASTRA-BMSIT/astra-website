@@ -57,7 +57,7 @@ const Contact = () => {
     >
       <div className="text-center mb-16">
         <span className="label-badge text-accent-orange mb-4 block">Communication Channels</span>
-        <h1 className="text-4xl md:text-5xl font-orbitron mb-8 tracking-widest">CONTACT </h1>
+        <h1 className="text-4xl md:text-5xl font-display mb-8 tracking-widest">CONTACT</h1>
         <div className="h-1 w-24 bg-accent-orange mx-auto" />
       </div>
 
@@ -79,13 +79,13 @@ const Contact = () => {
                 {info.icon}
               </div>
               <div className="flex-1">
-                <span className="block font-rajdhani text-sm text-accent-orange uppercase tracking-badge mb-2">{info.label}</span>
+                <span className="block font-mono text-sm text-accent-orange uppercase tracking-badge mb-2">{info.label}</span>
                 {info.link ? (
-                  <a href={info.link} className="text-xl md:text-2xl font-inter text-text-primary hover:text-accent-orange transition-colors leading-tight block">
+                  <a href={info.link} className="text-xl md:text-2xl font-body text-text-primary hover:text-accent-orange transition-colors leading-tight block">
                     {info.value}
                   </a>
                 ) : (
-                  <span className="text-xl md:text-2xl font-inter text-text-primary leading-tight block">
+                  <span className="text-xl md:text-2xl font-body text-text-primary leading-tight block">
                     {info.value}
                   </span>
                 )}
@@ -94,7 +94,7 @@ const Contact = () => {
           ))}
 
           <div className="pt-8 border-t border-custom-border">
-             <span className="block font-rajdhani text-sm text-text-muted uppercase tracking-badge mb-6">Social Intelligence</span>
+             <span className="block font-mono text-sm text-text-muted uppercase tracking-badge mb-6">Social Intelligence</span>
              <div className="flex space-x-6">
                 {socials.map((social, idx) => (
                   <a 
@@ -129,10 +129,10 @@ const Contact = () => {
                 { name: "Varnika Kirani Raghavendra", phones: ["+91 99020 99899"] },
               ].map((contact, i) => (
                 <div key={i} className="flex items-center justify-between px-6 py-4 group hover:bg-accent-orange/5 transition-colors">
-                  <span className="font-rajdhani text-text-primary uppercase tracking-badge text-sm">{contact.name}</span>
+                  <span className="font-body font-semibold text-text-primary uppercase tracking-badge text-sm">{contact.name}</span>
                   <div className="flex flex-col items-end space-y-1">
                     {contact.phones.map((phone, j) => (
-                      <a key={j} href={`tel:${phone.replace(/\s/g, '')}`} className="font-orbitron text-sm text-accent-orange hover:text-text-primary transition-colors">
+                      <a key={j} href={`tel:${phone.replace(/\s/g, '')}`} className="font-mono text-sm text-accent-orange hover:text-text-primary transition-colors">
                         {phone}
                       </a>
                     ))}
@@ -170,10 +170,10 @@ const Contact = () => {
             <div className="px-6 pt-6 pb-4 border-b border-custom-border flex items-center justify-between">
               <div>
                 <span className="label-badge text-accent-orange text-xs block mb-1">Navigation Hub</span>
-                <h3 className="font-orbitron text-lg text-text-primary tracking-widest">TARGET COORDINATES</h3>
+                <h3 className="font-display text-lg text-text-primary tracking-widest">TARGET COORDINATES</h3>
               </div>
               {/* Map / Satellite toggle */}
-              <div className="flex border border-custom-border overflow-hidden text-xs font-rajdhani uppercase tracking-badge">
+              <div className="flex border border-custom-border overflow-hidden text-xs font-mono uppercase tracking-badge">
                 <button
                   onClick={() => setMapType('roadmap')}
                   className={`px-3 py-1.5 transition-colors ${mapType === 'roadmap' ? 'bg-accent-orange text-bg-base' : 'text-text-muted hover:text-text-primary'}`}
@@ -193,7 +193,7 @@ const Contact = () => {
                   <span className="absolute inline-flex w-full h-full rounded-full bg-accent-orange opacity-20 animate-ping" />
                   <HiLocationMarker className="text-accent-orange text-xl relative z-10" />
                 </div>
-                <span className="font-orbitron text-sm text-accent-orange tracking-widest">
+                <span className="font-mono text-sm text-accent-orange tracking-widest">
                   13.1341° N &nbsp;|&nbsp; 77.5694° E
                 </span>
               </div>
@@ -201,7 +201,7 @@ const Contact = () => {
                 href="https://maps.app.goo.gl/358pK1GGfQsexKAw5"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center space-x-2 px-4 py-2 border border-accent-orange text-accent-orange font-rajdhani text-xs uppercase tracking-badge hover:bg-accent-orange hover:text-bg-base transition-all hover:shadow-[0_0_12px_rgba(255,106,0,0.5)]"
+                className="flex items-center space-x-2 px-4 py-2 border border-accent-orange text-accent-orange font-mono text-xs uppercase tracking-badge hover:bg-accent-orange hover:text-bg-base transition-all hover:shadow-[0_0_12px_rgba(243,211,139,0.5)]"
               >
                 <span>Get Directions</span>
                 <HiExternalLink />

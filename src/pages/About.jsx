@@ -82,11 +82,11 @@ const About = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div variants={itemVariants}>
             <span className="label-badge text-accent-orange mb-4 block">The Institution</span>
-            <h1 className="text-4xl md:text-5xl font-orbitron mb-8">BMS Institute of Technology & Management</h1>
-            <p className="text-text-muted text-lg leading-relaxed font-inter mb-6">
+            <h1 className="text-4xl md:text-5xl font-display mb-8">BMS Institute of Technology & Management</h1>
+            <p className="text-text-muted text-lg leading-relaxed font-body mb-6">
               Located in Yelahanka, Bengaluru, BMSIT&M is a premier institution known for academic excellence and innovation. With a legacy of over two decades, we have been at the forefront of engineering education, fostering industry collaboration and research-driven learning.
             </p>
-            <p className="text-text-muted text-lg leading-relaxed font-inter">
+            <p className="text-text-muted text-lg leading-relaxed font-body">
               Our commitment to excellence has consistently placed us among the top engineering colleges in Karnataka, producing graduates who contribute significantly to national growth and technological advancement.
             </p>
           </motion.div>
@@ -126,7 +126,7 @@ const About = () => {
       <motion.section variants={containerVariants}>
         <motion.div variants={itemVariants} className="text-center mb-16">
           <span className="label-badge text-accent-amber mb-4 block">Operation Awareness</span>
-          <h2 className="text-4xl md:text-6xl font-orbitron mb-4 font-black italic tracking-tighter">ABOUT <span className="text-accent-orange">ASTRA CLUB</span></h2>
+          <h2 className="text-4xl md:text-6xl font-display mb-4 font-black italic tracking-tighter">ABOUT <span className="text-accent-orange">ASTRA CLUB</span></h2>
           <div className="h-1 w-24 bg-accent-orange mx-auto mb-8" />
         </motion.div>
 
@@ -136,10 +136,10 @@ const About = () => {
             <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
               <GiShield className="text-[10rem] -rotate-12" />
             </div>
-            <p className="text-xl text-text-primary font-inter leading-relaxed relative z-10">
-              ASTRA (Armed Squad for Tactical Readiness and Awareness) is a student-led defence technology club at <span className="text-accent-orange font-bold font-orbitron">BMS Institute of Technology and Management</span>, Bengaluru, established on 23 September 2025.
+            <p className="text-xl text-text-primary font-body leading-relaxed relative z-10">
+              ASTRA (Armed Squad for Tactical Readiness and Awareness) is a student-led defence technology club at <span className="text-accent-orange font-bold font-display">BMS Institute of Technology and Management</span>, Bengaluru, established on 23 September 2025.
             </p>
-            <p className="text-lg text-text-muted font-inter leading-relaxed mt-6 relative z-10">
+            <p className="text-lg text-text-muted font-body leading-relaxed mt-6 relative z-10">
               The club is focused on building interest, awareness, and practical expertise in modern defence and strategic technologies. ASTRA aims to bridge the gap between academic learning and real-world defence applications by promoting hands-on development, interdisciplinary collaboration, and industry-oriented exposure.
             </p>
           </div>
@@ -149,7 +149,7 @@ const About = () => {
         <div className="mb-32 holographic-grid-zone">
           <motion.div variants={itemVariants} className="flex items-center space-x-4 mb-12 justify-center">
             <div className="h-[2px] w-12 bg-accent-orange" />
-            <h3 className="text-3xl font-orbitron tracking-widest text-text-primary uppercase">What We Do</h3>
+            <h3 className="text-3xl font-display tracking-widest text-text-primary uppercase">What We Do</h3>
             <div className="h-[2px] w-12 bg-accent-orange" />
           </motion.div>
 
@@ -183,12 +183,12 @@ const About = () => {
           <motion.div variants={itemVariants} className="bg-bg-surface border-l-4 border-accent-orange/60 p-10">
             <div className="flex items-center space-x-3 mb-6">
               <HiAcademicCap className="text-accent-orange text-xl" />
-              <h3 className="font-orbitron text-xl text-text-primary tracking-widest">VISION & APPROACH</h3>
+              <h3 className="font-display text-xl text-text-primary tracking-widest">VISION & APPROACH</h3>
             </div>
-            <p className="text-text-muted font-inter leading-relaxed">
+            <p className="text-text-muted font-body leading-relaxed">
               The club promotes a strong foundation in both technical innovation and strategic awareness, encouraging students to think beyond conventional engineering and work on solutions aligned with national security needs.
             </p>
-            <p className="text-text-muted font-inter leading-relaxed mt-4">
+            <p className="text-text-muted font-body leading-relaxed mt-4">
               ASTRA also focuses on responsible and ethical innovation, ensuring that advancements in defence technology are aligned with global standards and frameworks.
             </p>
           </motion.div>
@@ -196,9 +196,9 @@ const About = () => {
           <motion.div variants={itemVariants} className="bg-bg-surface border-l-4 border-accent-amber/60 p-10">
             <div className="flex items-center space-x-3 mb-6">
               <HiShieldCheck className="text-accent-amber text-xl" />
-              <h3 className="font-orbitron text-xl text-text-primary tracking-widest">INDUSTRY & EXPOSURE</h3>
+              <h3 className="font-display text-xl text-text-primary tracking-widest">INDUSTRY & EXPOSURE</h3>
             </div>
-            <p className="text-text-muted font-inter leading-relaxed">
+            <p className="text-text-muted font-body leading-relaxed">
               ASTRA actively works towards connecting students with the defence ecosystem by exploring collaborations with organizations such as <span className="text-text-primary font-bold">DRDO and BEL</span>, providing insights into real-world defence production and research environments.
             </p>
           </motion.div>
@@ -208,7 +208,7 @@ const About = () => {
         <div className="max-w-6xl mx-auto mb-32">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <motion.div variants={itemVariants}>
-              <h3 className="text-2xl font-orbitron text-text-primary mb-8 border-b border-custom-border pb-4 font-black italic">ACTIVITIES</h3>
+              <h3 className="text-2xl font-display text-text-primary mb-8 border-b border-custom-border pb-4 font-black italic">ACTIVITIES</h3>
               <ul className="space-y-6">
                 {[
                   "Technical workshops and hands-on sessions",
@@ -218,14 +218,14 @@ const About = () => {
                 ].map((act, i) => (
                   <li key={i} className="flex items-center space-x-4 group">
                     <div className="w-1.5 h-1.5 bg-accent-orange group-hover:scale-150 transition-transform" />
-                    <span className="font-rajdhani text-lg font-bold tracking-widest text-text-muted group-hover:text-text-primary transition-colors uppercase">{act}</span>
+                    <span className="font-body text-lg font-semibold tracking-wide text-text-muted group-hover:text-text-primary transition-colors uppercase">{act}</span>
                   </li>
                 ))}
               </ul>
             </motion.div>
 
             <motion.div variants={itemVariants}>
-              <h3 className="text-2xl font-orbitron text-accent-orange mb-8 border-b border-accent-orange/30 pb-4 font-black italic">FLAGSHIP INITIATIVES</h3>
+              <h3 className="text-2xl font-display text-accent-orange mb-8 border-b border-accent-orange/30 pb-4 font-black italic">FLAGSHIP INITIATIVES</h3>
               <div className="space-y-6">
                 {[
                   { name: "ASTRA Defence Tech Expo", icon: <GiSatelliteCommunication /> },
@@ -234,7 +234,7 @@ const About = () => {
                 ].map((flag, i) => (
                   <div key={i} className="flex items-center space-x-6 p-4 bg-bg-surface border border-accent-orange/10 hover:border-accent-orange/40 transition-all">
                     <div className="text-2xl text-accent-orange">{flag.icon}</div>
-                    <span className="font-orbitron text-sm text-text-primary tracking-wider uppercase">{flag.name}</span>
+                    <span className="font-body text-sm font-semibold text-text-primary tracking-wider uppercase">{flag.name}</span>
                   </div>
                 ))}
               </div>
@@ -247,8 +247,8 @@ const About = () => {
           <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-accent-orange" />
           <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-accent-orange" />
           <span className="label-badge text-accent-orange mb-4 block">Strategic Objective</span>
-          <h3 className="text-2xl font-orbitron text-text-primary mb-6">OUR MISSION</h3>
-          <p className="text-xl text-text-primary font-inter italic leading-relaxed max-w-2xl mx-auto">
+          <h3 className="text-2xl font-display text-text-primary mb-6">OUR MISSION</h3>
+          <p className="text-xl text-text-primary font-body italic leading-relaxed max-w-2xl mx-auto">
             "To develop technically skilled and strategically aware engineers who can contribute meaningfully to defence, aerospace, and national technology ecosystems."
           </p>
         </motion.div>
@@ -258,7 +258,7 @@ const About = () => {
       <section className="mb-32 overflow-hidden">
         <motion.div variants={itemVariants} className="text-center mb-16">
           <span className="label-badge text-accent-orange mb-4 block">Visual Archive</span>
-          <h2 className="text-4xl md:text-5xl font-orbitron mb-4">Event Gallery</h2>
+          <h2 className="text-4xl md:text-5xl font-display mb-4">Event Gallery</h2>
         </motion.div>
 
         {/* Fixed: use CSS marquee (translateX -50%) instead of hardcoded px distance */}
@@ -286,7 +286,7 @@ const About = () => {
       <section className="pb-20">
         <motion.div variants={itemVariants} className="text-center mb-16">
           <span className="label-badge text-accent-amber mb-4 block">Leadership</span>
-          <h2 className="text-4xl md:text-5xl font-orbitron mb-4">Meet Our Team</h2>
+          <h2 className="text-4xl md:text-5xl font-display mb-4">Meet Our Team</h2>
         </motion.div>
 
         <div className="relative w-full overflow-hidden">

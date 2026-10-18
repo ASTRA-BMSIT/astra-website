@@ -14,6 +14,7 @@ import LiquidMetalBackdrop, {
   MouseLiquidField,
 } from "./components/LiquidMetalBackdrop";
 import ScrollProgress from "./components/ui/ScrollProgress";
+import LogoSequenceBackground from "./components/ui/LogoSequenceBackground";
 
 // Pages
 import Home from "./pages/Home";
@@ -108,6 +109,7 @@ function App() {
 
       {/* Background layers (fixed, below all content) */}
       <div className="hex-grid-overlay opacity-30" />
+      <LogoSequenceBackground />
       <LiquidMetalBackdrop className="liquid-metal--page" />
       <MouseLiquidField />
 

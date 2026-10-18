@@ -18,6 +18,10 @@ export default {
         // Backward-compat aliases used throughout JSX
         'accent-orange': '#f3d38b',
         'accent-amber':  '#fff4d6',
+        // Semantic alias protection — lock out cyan / cold tones
+        'cyan':          '#f3d38b',
+        'coral':         '#fff4d6',
+        'lime':          '#fce9b0',
         // Text
         'text-primary': '#f6f1e8',
         'text-muted':   '#d9ccb0',
@@ -26,11 +30,14 @@ export default {
         'custom-border': 'rgba(243,211,139,0.22)',
       },
       fontFamily: {
-        // Correct names — match actual fonts loaded
+        // Humanized typography system
+        display: ["'Sora'",          'sans-serif'],
+        body:    ["'Inter'",         'sans-serif'],
+        sans:    ["'Inter'",         'sans-serif'],
         sora:    ["'Sora'",          'sans-serif'],
         inter:   ["'Inter'",         'sans-serif'],
         mono:    ["'JetBrains Mono'", 'monospace'],
-        // Legacy aliases so existing className="font-orbitron" still works
+        // Legacy mechanical aliases mapped cleanly to humanized fonts
         orbitron: ["'Sora'",         'sans-serif'],
         rajdhani: ["'Inter'",        'sans-serif'],
       },

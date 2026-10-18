@@ -12,11 +12,11 @@ const Footer = () => {
           <Link to="/" className="flex items-center space-x-3">
             <img src="/astra-logo.png" alt="Astra Logo" className="h-12 w-auto object-contain" />
             <div>
-              <span className="font-orbitron font-bold text-2xl tracking-tactical text-text-primary block">ASTRA</span>
+              <span className="font-display font-bold text-2xl tracking-tactical text-text-primary block">ASTRA</span>
               <span className="label-badge text-accent-orange text-[10px]">Innovation for National Security</span>
             </div>
           </Link>
-          <p className="text-text-muted text-sm leading-relaxed max-w-xs font-inter">
+          <p className="text-text-muted text-sm leading-relaxed max-w-xs font-body">
             BMS Institute of Technology and Management's premier club for tactical readiness and awareness. Empowering students through defence innovation.
           </p>
           <div className="flex space-x-4 pt-2">
@@ -43,16 +43,16 @@ const Footer = () => {
 
         {/* Col 2: Quick Links */}
         <div>
-          <h4 className="text-text-primary uppercase tracking-badge text-sm mb-6 border-l-2 border-accent-orange pl-3">Quick Access</h4>
+          <h4 className="text-text-primary font-display uppercase tracking-badge text-sm mb-6 border-l-2 border-accent-orange pl-3">Quick Access</h4>
           <div className="grid grid-cols-2 gap-4">
             <ul className="space-y-3">
-              <li><Link to="/" className="text-text-muted hover:text-accent-orange text-sm transition-colors font-rajdhani uppercase">Home</Link></li>
-              <li><Link to="/about" className="text-text-muted hover:text-accent-orange text-sm transition-colors font-rajdhani uppercase">About</Link></li>
-              <li><Link to="/domains" className="text-text-muted hover:text-accent-orange text-sm transition-colors font-rajdhani uppercase">Domains</Link></li>
-              <li><Link to="/register" className="text-text-muted hover:text-accent-orange text-sm transition-colors font-rajdhani uppercase">Register</Link></li>
+              <li><Link to="/" className="text-text-muted hover:text-accent-orange text-xs transition-colors font-body font-medium uppercase tracking-wider">Home</Link></li>
+              <li><Link to="/about" className="text-text-muted hover:text-accent-orange text-xs transition-colors font-body font-medium uppercase tracking-wider">About</Link></li>
+              <li><Link to="/domains" className="text-text-muted hover:text-accent-orange text-xs transition-colors font-body font-medium uppercase tracking-wider">Domains</Link></li>
+              <li><Link to="/register" className="text-text-muted hover:text-accent-orange text-xs transition-colors font-body font-medium uppercase tracking-wider">Register</Link></li>
             </ul>
             <ul className="space-y-3">
-              <li><Link to="/contact" className="text-text-muted hover:text-accent-orange text-sm transition-colors font-rajdhani uppercase">Contact</Link></li>
+              <li><Link to="/contact" className="text-text-muted hover:text-accent-orange text-xs transition-colors font-body font-medium uppercase tracking-wider">Contact</Link></li>
             </ul>
           </div>
         </div>

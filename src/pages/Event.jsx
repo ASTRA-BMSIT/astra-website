@@ -35,15 +35,15 @@ const Event = () => {
       {/* Overview */}
       <section className="mb-24 text-center max-w-3xl mx-auto">
         <span className="label-badge text-accent-orange mb-4 block">Technical Focus Areas</span>
-        <h1 className="text-4xl md:text-5xl font-orbitron mb-8">ASTRA DOMAINS</h1>
-        <p className="text-text-muted text-lg leading-relaxed font-inter">
+        <h1 className="text-4xl md:text-5xl font-display mb-8">ASTRA DOMAINS</h1>
+        <p className="text-text-muted text-lg leading-relaxed font-body">
           ASTRA brings together students interested in the technologies shaping modern defence and strategic systems. Our domains provide a starting point for hands-on learning, interdisciplinary collaboration, and responsible innovation.
         </p>
       </section>
 
       {/* Domain Cards */}
       <section className="mb-32">
-        <h2 className="text-2xl font-orbitron mb-12 border-l-4 border-accent-orange pl-4">AREAS OF EXPLORATION</h2>
+        <h2 className="text-2xl font-display mb-12 border-l-4 border-accent-orange pl-4">AREAS OF EXPLORATION</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {domains.map((domain, idx) => (
             <TiltCard key={idx} maxTilt={7} scale={1.03}>
