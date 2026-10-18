@@ -32,7 +32,7 @@ const Event = () => {
     >
       {/* Overview */}
       <section className="mb-24 text-center max-w-3xl mx-auto">
-        <span className="label-badge text-accent-orange mb-4 block">Technical Focus Areas</span>
+        <span className="label-badge text-accent-red mb-4 block">Technical Focus Areas</span>
         <h1 className="text-4xl md:text-5xl font-orbitron mb-8">ASTRA DOMAINS</h1>
         <p className="text-text-muted text-lg leading-relaxed font-inter">
           ASTRA brings together students interested in the technologies shaping modern defence and strategic systems. Our domains provide a starting point for hands-on learning, interdisciplinary collaboration, and responsible innovation.
@@ -41,11 +41,11 @@ const Event = () => {
 
       {/* Domain Cards */}
       <section className="mb-32">
-        <h2 className="text-2xl font-orbitron mb-12 border-l-4 border-accent-orange pl-4">AREAS OF EXPLORATION</h2>
+        <h2 className="text-2xl font-orbitron mb-12 border-l-4 border-accent-red pl-4">AREAS OF EXPLORATION</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {domains.map((domain, idx) => (
-            <div key={idx} className="bg-bg-surface border border-custom-border p-8 hover:border-accent-orange transition-all group">
-              <div className="text-4xl text-accent-orange mb-6 group-hover:scale-110 transition-transform">
+            <div key={idx} className="bg-bg-surface border border-custom-border p-8 hover:border-accent-red transition-all group">
+              <div className="text-4xl text-accent-red mb-6 group-hover:scale-110 transition-transform">
                 {domain.icon}
               </div>
               <h3 className="text-xl font-rajdhani uppercase tracking-badge mb-4 text-text-primary">
