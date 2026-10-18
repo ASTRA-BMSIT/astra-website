@@ -7,33 +7,52 @@ export default {
   theme: {
     extend: {
       colors: {
-        'bg-base': "#0A0A0A",
-        'bg-surface': "#141414",
-        'bg-elevated': "#1C1C1C",
-        'accent-orange': "#FF6B00",
-        'accent-amber': "#FF9500",
-        'text-primary': "#FFFFFF",
-        'text-muted': "#9CA3AF",
-        'custom-border': "#2A2A2A",
+        // Backgrounds
+        'bg-base':     '#070706',
+        'bg-surface':  '#130f0c',
+        'bg-elevated': '#1d1914',
+        // Accents — named to match their ACTUAL visual value
+        'gold':        '#f3d38b',
+        'gold-bright': '#fce9b0',
+        'cream':       '#fff4d6',
+        // Backward-compat aliases used throughout JSX
+        'accent-orange': '#f3d38b',
+        'accent-amber':  '#fff4d6',
+        // Text
+        'text-primary': '#f6f1e8',
+        'text-muted':   '#d9ccb0',
+        'text-subtle':  '#9a8e76',
+        // Borders
+        'custom-border': 'rgba(243,211,139,0.22)',
       },
       fontFamily: {
-        orbitron: ["Roboto", "sans-serif"],
-        rajdhani: ["Nata Sans", "sans-serif"],
-        inter: ["Nata Sans", "sans-serif"],
+        // Correct names — match actual fonts loaded
+        sora:    ["'Sora'",          'sans-serif'],
+        inter:   ["'Inter'",         'sans-serif'],
+        mono:    ["'JetBrains Mono'", 'monospace'],
+        // Legacy aliases so existing className="font-orbitron" still works
+        orbitron: ["'Sora'",         'sans-serif'],
+        rajdhani: ["'Inter'",        'sans-serif'],
       },
       letterSpacing: {
         'tactical': '0.08em',
-        'badge': '0.12em',
+        'badge':    '0.12em',
+        'mono':     '0.10em',
       },
       keyframes: {
         glow: {
-          '0%, 100%': { boxShadow: '0 0 5px rgba(255, 107, 0, 0.2)' },
-          '50%': { boxShadow: '0 0 20px rgba(255, 107, 0, 0.6)' },
-        }
+          '0%, 100%': { boxShadow: '0 0 4px rgba(243,211,139,0.18)' },
+          '50%':       { boxShadow: '0 0 14px rgba(243,211,139,0.50)' },
+        },
+        'fade-up': {
+          '0%':   { opacity: '0', transform: 'translateY(16px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
       },
       animation: {
         'glow-pulse': 'glow 2s ease-in-out infinite',
-      }
+        'fade-up':    'fade-up 0.65s cubic-bezier(.16,1,.3,1) both',
+      },
     },
   },
   plugins: [],

@@ -1,134 +1,234 @@
+/* ─────────────────────────────────────────────
+   ASTRA — Global Stylesheet  (Single Source of Truth)
+   Stack: React 19 + Vite 8 + Tailwind CSS 4
+   ───────────────────────────────────────────── */
+
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Nata+Sans:wght@100..900&family=Roboto:wght@100..900&display=swap');
+/* ── 1. FONT IMPORTS ─────────────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@100..800&family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap");
 
+/* Keep DM Mono for backward-compat (some components use it directly) */
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap");
+
+/* ── 2. DESIGN TOKENS — one :root, authoritative ────────────── */
+:root {
+  /* Backgrounds */
+  --bg: #070706; /* page canvas — near-black, slight warmth  */
+  --bg-soft: #120f0c; /* slightly lifted surface                  */
+  --panel: rgba(20, 17, 12, 0.86); /* glass panel background             */
+
+  /* Brand accents */
+  --gold: #f3d38b; /* primary accent — warm gold               */
+  --gold-bright: #fce9b0; /* hover / bright gold                      */
+  --cream: #fff4d6; /* secondary warm cream                     */
+  --ivory: #f6f1e8; /* primary text — warm ivory                */
+
+  /* Text */
+  --text: #f6f1e8; /* --ivory alias for legibility             */
+  --muted: #d9ccb0; /* body copy / subdued                      */
+  --subtle: #9a8e76; /* extra subdued (timestamps, labels)       */
+
+  /* Borders */
+  --line: rgba(243, 211, 139, 0.22); /* standard panel border           */
+  --line-strong: rgba(
+    243,
+    211,
+    139,
+    0.52
+  ); /* emphasis border                 */
+
+  /* ── Fonts ────────────────────────────────────── */
+  --font-display: "Sora", sans-serif; /* headlines, hero            */
+  --font-body: "Inter", sans-serif; /* body copy                  */
+  --font-mono: "JetBrains Mono", monospace; /* telemetry, metadata, CTAs  */
+
+  /* ── Legacy aliases (App.css references these) ─ */
+  --ink: var(--bg);
+  --ink-soft: var(--bg-soft);
+  --paper: var(--ivory);
+  --display: var(--font-display);
+  --body: var(--font-body);
+  --mono: var(--font-mono);
+
+  /* ── RENAMED semantic aliases (replaces misleading --cyan/--coral/--lime) */
+  --cyan: var(--gold); /* backward-compat — was incorrectly gold */
+  --coral: var(--cream); /* backward-compat — was incorrectly cream*/
+  --lime: rgba(243, 211, 139, 0.7); /* backward-compat                   */
+
+  /* ── Tracking ────────────────────────────────── */
+  --tracking-tactical: 0.08em;
+  --tracking-badge: 0.12em;
+  --tracking-mono: 0.1em;
+}
+
+/* ── 3. TAILWIND v4 THEME LAYER ─────────────────────────────── */
 @theme {
+  /* Colors mapped to Tailwind utilities */
   --color-bg-base: #070706;
   --color-bg-surface: #130f0c;
   --color-bg-elevated: #1d1914;
-  --color-accent-orange: #f3d38b;
+  --color-accent-orange: #f3d38b; /* actual gold — matched to --gold      */
   --color-accent-amber: #fff4d6;
   --color-brand-devfolio: #d4af67;
   --color-text-primary: #f6f1e8;
   --color-text-muted: #d9ccb0;
-  --color-custom-border: rgba(218, 179, 82, 0.25);
+  --color-custom-border: rgba(243, 211, 139, 0.22);
 
-  --font-orbitron: "Roboto", sans-serif;
-  --font-rajdhani: "Nata Sans", sans-serif;
-  --font-inter: "Nata Sans", sans-serif;
+  /* Fonts mapped to Tailwind utilities */
+  --font-sora: "Sora", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  /* Legacy aliases so existing JSX classes still work */
+  --font-orbitron: "Sora", sans-serif;
+  --font-rajdhani: "Inter", sans-serif;
 
+  /* Letter-spacing */
   --tracking-tactical: 0.08em;
   --tracking-badge: 0.12em;
 
+  /* Glow pulse keyframe */
   @keyframes glow {
-    0%, 100% { box-shadow: 0 0 4px rgba(243, 211, 139, 0.18); }
-    50% { box-shadow: 0 0 14px rgba(243, 211, 139, 0.5); }
+    0%,
+    100% {
+      box-shadow: 0 0 4px rgba(243, 211, 139, 0.18);
+    }
+    50% {
+      box-shadow: 0 0 14px rgba(243, 211, 139, 0.5);
+    }
   }
 }
 
-/* Base Styles */
+/* ── 4. BASE STYLES ─────────────────────────────────────────── */
 @layer base {
-  :root {
-    --bg-base: #070706;
-    --bg-surface: #130f0c;
-    --bg-elevated: #1d1914;
-    --accent-orange: #f3d38b;
-    --accent-amber: #fff4d6;
-    --brand-devfolio: #d4af67;
-    --text-primary: #f6f1e8;
-    --text-muted: #d9ccb0;
-    --border: rgba(218, 179, 82, 0.25);
-  }
-
   html {
     scroll-behavior: smooth;
+    font-size: 16px;
   }
 
   body {
-    background: #070706;
-    color: var(--text-primary);
-    font-family: var(--font-inter);
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
     margin: 0;
     min-height: 100vh;
-    position: relative;
     overflow-x: hidden;
-    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Section spacing for single-page flow */
-  section, [id] {
-    scroll-margin-top: 100px; /* Offset for floating pill navbar */
+  /* Scroll-margin offset for floating navbar */
+  section,
+  [id] {
+    scroll-margin-top: 100px;
   }
 
-  h1, h2 {
-    font-family: var(--font-orbitron);
+  /* Typography hierarchy — Sora for display, Inter for reading */
+  h1,
+  h2 {
+    font-family: var(--font-display);
     letter-spacing: -0.04em;
+    font-weight: 700;
   }
 
-  h3, h4 {
-    font-family: var(--font-orbitron);
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
     font-weight: 600;
+    letter-spacing: -0.02em;
   }
 
-  h5, h6 {
-    font-family: var(--font-orbitron);
+  p,
+  li,
+  span {
+    font-family: var(--font-body);
+    line-height: 1.65;
+  }
+
+  /* Telemetry / metadata — JetBrains Mono exclusively */
+  code,
+  kbd,
+  samp,
+  pre,
+  .mono,
+  [class*="font-mono"] {
+    font-family: var(--font-mono);
   }
 }
 
-/* Utilities */
+/* ── 5. UTILITIES ───────────────────────────────────────────── */
 @layer utilities {
+  /* Label / badge — monospace + uppercase for telemetry labels */
   .label-badge {
-    font-family: var(--font-rajdhani);
+    font-family: var(--font-mono);
     text-transform: uppercase;
     letter-spacing: var(--tracking-badge);
-    font-size: 0.875rem;
+    font-size: 0.75rem;
+    font-weight: 500;
   }
 
   .tactical-border {
-    border: 1px solid var(--border);
+    border: 1px solid var(--line);
   }
 
   .animate-glow-pulse {
     animation: glow 2s ease-in-out infinite;
   }
+
+  /* ── Scroll-triggered fade-in (used by useInView hook) ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-18px);
+    transition:
+      opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-left.in-view {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* MagicCard spotlight on hover */
+  .magic-card:hover .magic-card__spotlight {
+    opacity: 1 !important;
+  }
 }
 
-/* Scanline Effect */
-body::after {
-  content: none;
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: repeating-linear-gradient(
-    rgba(18, 16, 16, 0) 0,
-    rgba(0, 0, 0, 0.15) 50%,
-    rgba(18, 16, 16, 0) 100%
-  );
-  background-size: 100% 4px;
-  z-index: 100;
-  pointer-events: none;
-  opacity: 0.025;
-}
-
-/* Hex-grid SVG pattern overlay */
+/* ── 6. HEX-GRID OVERLAY ────────────────────────────────────── */
 .hex-grid-overlay {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(rgba(243,211,139,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(243,211,139,.04) 1px, transparent 1px);
+  background-image:
+    linear-gradient(rgba(243, 211, 139, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(243, 211, 139, 0.04) 1px, transparent 1px);
   background-size: 48px 48px;
   pointer-events: none;
   z-index: 0;
 }
 
-/* Infinite marquee — GPU-composited, zero jank */
+/* ── 7. MARQUEE ─────────────────────────────────────────────── */
 @keyframes marquee {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .marquee-track {
@@ -137,34 +237,42 @@ body::after {
   will-change: transform;
   animation: marquee 35s linear infinite;
 }
-
 .marquee-track:hover {
   animation-play-state: paused;
 }
 
-/* Custom Scrollbar */
+/* ── 8. SCROLLBAR ───────────────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
-
 ::-webkit-scrollbar-track {
-  background: var(--bg-base);
+  background: var(--bg);
 }
-
 ::-webkit-scrollbar-thumb {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: #FF6B00;
+  background: var(--gold);
+}
+* {
+  scrollbar-color: rgba(243, 211, 139, 0.4) rgba(7, 7, 6, 0.9);
 }
 
-/* ASTRA redesign */
-::selection { background: var(--accent-orange); color: var(--bg-base); }
-button { font: inherit; }
+/* ── 9. SELECTION ───────────────────────────────────────────── */
+::selection {
+  background: var(--gold);
+  color: var(--bg);
+}
 
-/* Hyper redesign overrides */
-body { background:#050505; }
-body::after { opacity:.025; }
-::selection { background:#FF6B00; color:#050505; }
+/* ── 10. REDUCED MOTION ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GiShield, GiDeliveryDrone, GiRobotLeg, GiSecurityGate, GiBrain, GiSatelliteCommunication, GiTrophy, GiPublicSpeaker } from 'react-icons/gi';
 import { HiLightningBolt, HiChip, HiGlobe, HiAcademicCap, HiFire, HiShieldCheck } from 'react-icons/hi';
+import TiltCard from '../components/ui/TiltCard';
+import MagicCard from '../components/ui/MagicCard';
 
 const About = () => {
   const [imgIndex, setImgIndex] = useState(0);
@@ -76,7 +78,7 @@ const About = () => {
       id="about"
     >
       {/* Section A - BMSIT */}
-      <section className="mb-32">
+      <section className="mb-32 reveal">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div variants={itemVariants}>
             <span className="label-badge text-accent-orange mb-4 block">The Institution</span>
@@ -158,19 +160,19 @@ const About = () => {
               { icon: <HiChip />, title: "Tech Exploration", text: "Exploration of domains like artificial intelligence, cybersecurity, aerospace, and robotics." },
               { icon: <HiGlobe />, title: "Strategic Dialogue", text: "Discussions on emerging global security challenges and defence strategies." }
             ].map((item, i) => (
-              <motion.div
-                key={i}
-                variants={itemVariants}
-                whileHover={{ scale: 1.02 }}
-                className="bg-bg-elevated border border-custom-border p-8 flex space-x-6 group hover:border-accent-orange/50 transition-all"
-              >
-                <div className="w-16 h-16 shrink-0 border border-accent-orange/30 flex items-center justify-center text-3xl text-accent-orange group-hover:bg-accent-orange/10 transition-colors">
-                  {item.icon}
-                </div>
-                <div>
-                  <h4 className="font-orbitron text-lg text-text-primary mb-3 tracking-wider uppercase">{item.title}</h4>
-                  <p className="text-text-muted font-inter text-sm leading-relaxed">{item.text}</p>
-                </div>
+              <motion.div key={i} variants={itemVariants}>
+                <MagicCard
+                  className="bg-bg-elevated border border-custom-border p-8 flex space-x-6 group hover:border-accent-orange/50 transition-all h-full"
+                  spotlightColor="rgba(243,211,139,0.08)"
+                >
+                  <div className="w-16 h-16 shrink-0 border border-accent-orange/30 flex items-center justify-center text-3xl text-accent-orange group-hover:bg-accent-orange/10 transition-colors">
+                    {item.icon}
+                  </div>
+                  <div>
+                    <h4 className="font-sora text-lg text-text-primary mb-3 tracking-wider uppercase">{item.title}</h4>
+                    <p className="text-text-muted font-inter text-sm leading-relaxed">{item.text}</p>
+                  </div>
+                </MagicCard>
               </motion.div>
             ))}
           </div>
@@ -259,33 +261,24 @@ const About = () => {
           <h2 className="text-4xl md:text-5xl font-orbitron mb-4">Event Gallery</h2>
         </motion.div>
 
-        <div className="relative flex w-full">
-          <motion.div
-            animate={{ x: [0, -2000] }}
-            transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 30,
-                ease: "linear",
-              }
-            }}
-            className="flex space-x-8 min-w-max pb-10"
-          >
+        {/* Fixed: use CSS marquee (translateX -50%) instead of hardcoded px distance */}
+        <div className="relative w-full overflow-hidden">
+          <div className="marquee-track gap-8 py-4" style={{ animationDuration: '32s' }}>
             {[...galleryImages, ...galleryImages].map((imgUrl, idx) => (
               <motion.div
                 key={idx}
                 whileTap={{ scale: 0.95 }}
-                className="w-[400px] h-64 bg-bg-surface border border-custom-border group relative overflow-hidden flex-shrink-0 transition-all duration-700"
+                className="flex-shrink-0 w-[400px] h-64 bg-bg-surface border border-custom-border group relative overflow-hidden transition-all duration-700"
               >
                 <img
                   src={imgUrl}
                   alt={`Event Image ${idx}`}
                   className="w-full h-full object-cover brightness-75 group-hover:brightness-100 transition-all duration-700"
+                  loading="lazy"
                 />
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -297,27 +290,29 @@ const About = () => {
         </motion.div>
 
         <div className="relative w-full overflow-hidden">
-          <div className="marquee-track gap-8 py-6">
+          <div className="marquee-track gap-8 py-6" style={{ animationDuration: '40s' }}>
             {[...teamMembers, ...teamMembers].map((member, idx) => (
-              <div
+              <TiltCard
                 key={idx}
-                className="flex-shrink-0 w-72 bg-bg-surface border border-custom-border group relative overflow-hidden pb-6 transition-all duration-500 hover:border-accent-orange"
+                maxTilt={5}
+                scale={1.02}
+                className="flex-shrink-0"
               >
-                <motion.div 
-                  whileTap={{ scale: 0.95 }}
-                  className="w-full h-80 overflow-hidden relative transition-all duration-700"
-                >
-                  <img
-                    src={member.photo}
-                    alt={member.name}
-                    className="w-full h-full object-cover object-top brightness-90 group-hover:brightness-100 transition-all duration-700"
-                  />
-                </motion.div>
-                <div className="px-6 pt-6 text-left">
-                  <h3 className="text-lg font-orbitron text-text-primary mb-2 uppercase leading-none">{member.name}</h3>
-                  <span className="font-rajdhani text-xs uppercase tracking-badge text-accent-orange font-bold italic">{member.role}</span>
+                <div className="w-72 bg-bg-surface border border-custom-border group relative overflow-hidden pb-6 transition-all duration-500 hover:border-accent-orange">
+                  <div className="w-full h-80 overflow-hidden relative">
+                    <img
+                      src={member.photo}
+                      alt={member.name}
+                      className="w-full h-full object-cover object-top brightness-90 group-hover:brightness-100 transition-all duration-700"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="px-6 pt-6 text-left">
+                    <h3 className="text-lg font-sora text-text-primary mb-2 uppercase leading-none">{member.name}</h3>
+                    <span className="font-mono text-xs uppercase tracking-badge text-accent-orange font-bold">{member.role}</span>
+                  </div>
                 </div>
-              </div>
+              </TiltCard>
             ))}
         </div>
       </div>

@@ -9,6 +9,8 @@ import {
   GiRadarSweep, 
   GiDeliveryDrone,
 } from 'react-icons/gi';
+import TiltCard from '../components/ui/TiltCard';
+import MagicCard from '../components/ui/MagicCard';
 
 const Event = () => {
   const domains = [
@@ -44,17 +46,23 @@ const Event = () => {
         <h2 className="text-2xl font-orbitron mb-12 border-l-4 border-accent-orange pl-4">AREAS OF EXPLORATION</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {domains.map((domain, idx) => (
-            <div key={idx} className="bg-bg-surface border border-custom-border p-8 hover:border-accent-orange transition-all group">
-              <div className="text-4xl text-accent-orange mb-6 group-hover:scale-110 transition-transform">
-                {domain.icon}
-              </div>
-              <h3 className="text-xl font-rajdhani uppercase tracking-badge mb-4 text-text-primary">
-                {domain.title}
-              </h3>
-              <p className="text-text-muted text-sm leading-relaxed border-t border-custom-border pt-4">
-                {domain.desc}
-              </p>
-            </div>
+            <TiltCard key={idx} maxTilt={7} scale={1.03}>
+              <MagicCard
+                className="bg-bg-surface border border-custom-border p-8 hover:border-accent-orange transition-all group h-full"
+                spotlightColor="rgba(243,211,139,0.10)"
+                borderColor="rgba(243,211,139,0.6)"
+              >
+                <div className="text-4xl text-accent-orange mb-6 group-hover:scale-110 transition-transform" style={{ transformStyle: 'preserve-3d', transform: 'translateZ(16px)' }}>
+                  {domain.icon}
+                </div>
+                <h3 className="text-xl font-sora uppercase tracking-badge mb-4 text-text-primary">
+                  {domain.title}
+                </h3>
+                <p className="text-text-muted text-sm leading-relaxed border-t border-custom-border pt-4">
+                  {domain.desc}
+                </p>
+              </MagicCard>
+            </TiltCard>
           ))}
         </div>
       </section>
