@@ -208,7 +208,7 @@ export default function Home() {
               className="hero-flight"
               style={{ y: heroVisualY }}
             >
-              <TiltCard maxTilt={6} scale={1.01}>
+              <TiltCard maxTilt={5} scale={1.01} className="w-full max-w-[540px] lg:max-w-[580px] xl:max-w-[620px] flex justify-center">
                 <MissionControlSequence targetRef={heroRef} />
               </TiltCard>
             </motion.div>

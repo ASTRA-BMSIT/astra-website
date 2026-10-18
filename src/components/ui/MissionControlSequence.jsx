@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import { useScroll, useMotionValueEvent } from "framer-motion";
+import { useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 
 const TOTAL_FRAMES = 40;
 
@@ -10,24 +10,30 @@ const getAstraFramePath = (index) => {
 
 /**
  * MissionControlSequence
- * 
- * Replaces the static/CSS-animated mission control UI on the right side of the hero section.
- * Preloads the 40-frame mission control / tactical platform animation sequence from /astra_break/
- * and maps the scroll progress through the hero section to scrub frame-by-frame.
- * 
- * Includes high-DPI canvas rendering, tactical HUD telemetry readouts,
- * interactive frame tracking, and subtle warm-gold aerospace styling.
+ *
+ * Highly optimized HTML5 Canvas frame-by-frame image sequencer for the ASTRA Hero section.
+ * - Sizing & Border: Scaled up to 540px–620px with an ultra-sleek, razor-thin 1px tactical golden bezel (no heavy black borders).
+ * - Precision Scroll Timing: Transition starts at 0.0 (start of Home) and completes at 0.5 (middle of Home), remaining locked at Frame 39 well before reaching the About section.
+ * - Cinematic Smoothness: Array-preloaded frames with asynchronous GPU texture decoding and a high-framerate requestAnimationFrame lerp render loop.
  */
 export default function MissionControlSequence({ targetRef, className = "" }) {
   const canvasRef = useRef(null);
-  const imagesRef = useRef(new Map());
-  const [currentFrame, setCurrentFrame] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [scrubProgress, setScrubProgress] = useState(0);
-  const rafIdRef = useRef(null);
-  const currentRenderedFrameRef = useRef(-1);
+  const framesRef = useRef(new Array(TOTAL_FRAMES).fill(null));
+  const [currentFrameDisplay, setCurrentFrameDisplay] = useState(0);
+  const [scrubPercentDisplay, setScrubPercentDisplay] = useState(0);
 
-  // Bind scroll progress to the hero section
+  // Target frame from scroll vs currently rendered lerped frame
+  const targetFrameRef = useRef(0);
+  const currentFrameRef = useRef(0);
+  const isLoopRunningRef = useRef(false);
+  const rafIdRef = useRef(null);
+  const lastDrawnFrameRef = useRef(-1);
+
+  // ── Precision Scroll Timing ─────────────────────────────────────────
+  // Offset ["start start", "end start"] tracks the home section's journey through viewport.
+  // 0.0 = hero top at viewport top (start of Home)
+  // 0.5 = middle of Home section (final frame reached here!)
+  // >= 0.5 = clamped at frame 39 (completes well before reaching About)
   const { scrollYProgress } = useScroll(
     targetRef
       ? {
@@ -37,202 +43,197 @@ export default function MissionControlSequence({ targetRef, className = "" }) {
       : {}
   );
 
-  // Preload all frames in /astra_break
-  useEffect(() => {
-    let isCancelled = false;
-    const images = imagesRef.current;
+  const frameProgress = useTransform(
+    scrollYProgress,
+    [0, 0.5],
+    [0, TOTAL_FRAMES - 1],
+    { clamp: true }
+  );
 
-    // Load first frame immediately for instant visual
-    const loadIndices = [0, TOTAL_FRAMES - 1];
-    for (let i = 1; i < TOTAL_FRAMES - 1; i++) {
-      loadIndices.push(i);
-    }
-
-    const loadFrame = (index) => {
-      return new Promise((resolve) => {
-        if (images.has(index)) {
-          resolve(images.get(index));
-          return;
-        }
-        const img = new Image();
-        img.onload = () => {
-          if (!isCancelled) {
-            images.set(index, img);
-            if (index === 0 && currentRenderedFrameRef.current === -1) {
-              setIsLoaded(true);
-              renderFrame(0);
-            }
-          }
-          resolve(img);
-        };
-        img.onerror = () => {
-          resolve(null);
-        };
-        img.src = getAstraFramePath(index);
-      });
-    };
-
-    const loadAll = async () => {
-      // Prioritize frame 0 first
-      await loadFrame(0);
-      const batchSize = 4;
-      for (let i = 0; i < loadIndices.length; i += batchSize) {
-        if (isCancelled) break;
-        const batch = loadIndices.slice(i, i + batchSize);
-        await Promise.all(batch.map(loadFrame));
-      }
-      if (!isCancelled) setIsLoaded(true);
-    };
-
-    loadAll();
-
-    return () => {
-      isCancelled = true;
-      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
-    };
-  }, []);
-
-  // Find nearest available frame
-  const getNearestFrame = useCallback((targetIndex) => {
-    const images = imagesRef.current;
-    if (images.has(targetIndex)) return images.get(targetIndex);
-
-    for (let offset = 1; offset < TOTAL_FRAMES; offset++) {
-      const prev = targetIndex - offset;
-      const next = targetIndex + offset;
-      if (prev >= 0 && images.has(prev)) return images.get(prev);
-      if (next < TOTAL_FRAMES && images.has(next)) return images.get(next);
-    }
-    return null;
-  }, []);
-
-  // Render a frame on the canvas
-  const renderFrame = useCallback((frameIndex) => {
+  // ── Draw Frame onto High-DPI Canvas ──────────────────────────────────
+  const drawFrameToCanvas = useCallback((frameIdx) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const img = getNearestFrame(frameIndex);
+    const clampedIndex = Math.max(0, Math.min(TOTAL_FRAMES - 1, frameIdx));
+    let img = framesRef.current[clampedIndex];
+
+    // Fallback to nearest loaded frame if exact frame is loading
+    if (!img || !img.complete || img.naturalWidth === 0) {
+      for (let offset = 1; offset < TOTAL_FRAMES; offset++) {
+        const prev = clampedIndex - offset;
+        const next = clampedIndex + offset;
+        if (prev >= 0 && framesRef.current[prev]?.complete && framesRef.current[prev]?.naturalWidth > 0) {
+          img = framesRef.current[prev];
+          break;
+        }
+        if (next < TOTAL_FRAMES && framesRef.current[next]?.complete && framesRef.current[next]?.naturalWidth > 0) {
+          img = framesRef.current[next];
+          break;
+        }
+      }
+    }
+
     if (!img) return;
 
     const dpr = typeof window !== "undefined" ? Math.min(window.devicePixelRatio || 1, 2) : 1;
     const width = canvas.clientWidth;
     const height = canvas.clientHeight;
 
-    if (canvas.width !== width * dpr || canvas.height !== height * dpr) {
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
+    if (width === 0 || height === 0) return;
+
+    if (canvas.width !== Math.round(width * dpr) || canvas.height !== Math.round(height * dpr)) {
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
     }
 
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, width, height);
 
-    // Calculate dimensions to cover/contain neatly in 16:9 ratio
-    const imgAspect = img.naturalWidth / img.naturalHeight;
-    const canvasAspect = width / height;
+    // Precise 16:9 frame rendering edge-to-edge
+    ctx.drawImage(img, 0, 0, width, height);
+    lastDrawnFrameRef.current = clampedIndex;
+  }, []);
 
-    let drawWidth, drawHeight, drawX, drawY;
+  // ── Continuous Cinema Lerp Loop (rAF) ───────────────────────────────
+  const startAnimationLoop = useCallback(() => {
+    if (isLoopRunningRef.current) return;
+    isLoopRunningRef.current = true;
 
-    if (imgAspect > canvasAspect) {
-      drawWidth = height * imgAspect;
-      drawHeight = height;
-      drawX = (width - drawWidth) / 2;
-      drawY = 0;
-    } else {
-      drawWidth = width;
-      drawHeight = width / imgAspect;
-      drawX = 0;
-      drawY = (height - drawHeight) / 2;
+    const tick = () => {
+      const diff = targetFrameRef.current - currentFrameRef.current;
+
+      if (Math.abs(diff) < 0.015) {
+        currentFrameRef.current = targetFrameRef.current;
+        const rounded = Math.round(currentFrameRef.current);
+        if (rounded !== lastDrawnFrameRef.current) {
+          drawFrameToCanvas(rounded);
+          setCurrentFrameDisplay(rounded);
+          setScrubPercentDisplay(Math.round((rounded / (TOTAL_FRAMES - 1)) * 100));
+        }
+        isLoopRunningRef.current = false;
+        return;
+      }
+
+      // Smooth interpolation factor (0.24) delivers silky, high-framerate response
+      currentFrameRef.current += diff * 0.24;
+      const rounded = Math.round(currentFrameRef.current);
+
+      if (rounded !== lastDrawnFrameRef.current) {
+        drawFrameToCanvas(rounded);
+        setCurrentFrameDisplay(rounded);
+        setScrubPercentDisplay(Math.round((rounded / (TOTAL_FRAMES - 1)) * 100));
+      }
+
+      rafIdRef.current = requestAnimationFrame(tick);
+    };
+
+    rafIdRef.current = requestAnimationFrame(tick);
+  }, [drawFrameToCanvas]);
+
+  // ── Preload All Frames into Array on Mount ──────────────────────────
+  useEffect(() => {
+    let isCancelled = false;
+    const preloadedArray = new Array(TOTAL_FRAMES);
+
+    for (let i = 0; i < TOTAL_FRAMES; i++) {
+      const img = new Image();
+      img.src = getAstraFramePath(i);
+
+      img.onload = () => {
+        if (isCancelled) return;
+        preloadedArray[i] = img;
+
+        // Eagerly decode into GPU memory
+        if (img.decode) {
+          img.decode().catch(() => {});
+        }
+
+        // Draw Frame 0 as soon as it's available
+        if (i === 0 && lastDrawnFrameRef.current === -1) {
+          drawFrameToCanvas(0);
+        }
+      };
+
+      preloadedArray[i] = img;
     }
 
-    ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
-    currentRenderedFrameRef.current = frameIndex;
-  }, [getNearestFrame]);
+    framesRef.current = preloadedArray;
 
-  // Handle window resizing
+    return () => {
+      isCancelled = true;
+      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+    };
+  }, [drawFrameToCanvas]);
+
+  // ── Window Resize Observer ──────────────────────────────────────────
   useEffect(() => {
     const handleResize = () => {
-      renderFrame(currentRenderedFrameRef.current >= 0 ? currentRenderedFrameRef.current : 0);
+      drawFrameToCanvas(Math.round(currentFrameRef.current));
     };
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [renderFrame]);
+  }, [drawFrameToCanvas]);
 
-  // Scrub frame sequence on scroll
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    const progress = Math.max(0, Math.min(1, latest));
-    const targetFrame = Math.min(TOTAL_FRAMES - 1, Math.floor(progress * (TOTAL_FRAMES - 1)));
-
-    setScrubProgress(Math.round(progress * 100));
-
-    if (targetFrame !== currentRenderedFrameRef.current) {
-      setCurrentFrame(targetFrame);
-      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
-      rafIdRef.current = requestAnimationFrame(() => {
-        renderFrame(targetFrame);
-      });
-    }
+  // ── Scroll Event Listener via Framer Motion ─────────────────────────
+  useMotionValueEvent(frameProgress, "change", (latest) => {
+    targetFrameRef.current = Math.max(0, Math.min(TOTAL_FRAMES - 1, latest));
+    startAnimationLoop();
   });
 
-  const formattedFrame = String(currentFrame + 1).padStart(2, "0");
+  const formattedFrame = String(currentFrameDisplay + 1).padStart(2, "0");
 
   return (
     <div
-      className={`tactical-mission-panel w-full max-w-[430px] rounded-lg overflow-hidden border border-[rgba(243,211,139,0.32)] bg-[#120f0c]/90 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.85)] ${className}`}
-      style={{
-        boxShadow: "0 20px 50px rgba(7,7,6,0.9), 0 0 35px rgba(243,211,139,0.12)",
-      }}
+      className={`tactical-mission-panel w-full max-w-[540px] lg:max-w-[580px] xl:max-w-[620px] rounded-xl overflow-hidden border border-[rgba(243,211,139,0.25)] hover:border-[rgba(243,211,139,0.45)] ring-1 ring-inset ring-[rgba(243,211,139,0.08)] bg-[#0e0b08]/85 backdrop-blur-xl shadow-[0_20px_50px_rgba(7,7,6,0.7),0_0_30px_rgba(243,211,139,0.08)] transition-all duration-300 ${className}`}
     >
-      {/* ── Top Telemetry HUD Header ── */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-[rgba(243,211,139,0.18)] bg-[#0d0a08]/80 text-[#d9ccb0] font-mono text-[9px] tracking-tactical">
-        <div className="flex items-center gap-2">
+      {/* ── Sleek, Compact Telemetry HUD Header ── */}
+      <div className="flex items-center justify-between px-4 py-2 border-b border-[rgba(243,211,139,0.16)] bg-[#130f0c]/90 text-[#d9ccb0] font-mono text-[9px] tracking-tactical select-none">
+        <div className="flex items-center gap-2.5">
           <span className="w-1.5 h-1.5 rounded-full bg-[#f3d38b] shadow-[0_0_8px_#f3d38b] animate-pulse" />
-          <span className="text-[#f6f1e8] font-medium">NX-01 // MISSION CONTROL</span>
+          <span className="text-[#f6f1e8] font-medium tracking-wider">NX-01 // MISSION CONTROL</span>
         </div>
-        <div className="flex items-center gap-2 text-[#9a8e76]">
+        <div className="flex items-center gap-3 text-[#9a8e76]">
           <span>SECTOR BLR-01</span>
-          <span className="text-[#f3d38b] font-medium">ONLINE</span>
+          <span className="text-[#f3d38b] font-semibold flex items-center gap-1">
+            <span className="inline-block w-1 h-1 rounded-full bg-[#f3d38b]" />
+            ONLINE
+          </span>
         </div>
       </div>
 
-      {/* ── Visual Frame Sequencer Screen ── */}
-      <div className="relative aspect-[16/10] w-full bg-[#070706] overflow-hidden group">
-        {/* Canvas displaying scrubbed frame */}
+      {/* ── Cinematic 16:9 Canvas Screen (Zero Black Bars) ── */}
+      <div className="relative w-full aspect-video bg-[#070706] overflow-hidden group select-none">
+        {/* Active Frame Canvas */}
         <canvas
           ref={canvasRef}
-          className="w-full h-full block object-cover"
+          className="w-full h-full block"
         />
 
-        {/* Reticle Corner Markers */}
-        <div className="pointer-events-none absolute inset-2.5 border border-[rgba(243,211,139,0.14)]" />
-        <div className="pointer-events-none absolute top-2 left-2 w-2.5 h-2.5 border-t border-l border-[#f3d38b]" />
-        <div className="pointer-events-none absolute top-2 right-2 w-2.5 h-2.5 border-t border-r border-[#f3d38b]" />
-        <div className="pointer-events-none absolute bottom-2 left-2 w-2.5 h-2.5 border-b border-l border-[#f3d38b]" />
-        <div className="pointer-events-none absolute bottom-2 right-2 w-2.5 h-2.5 border-b border-r border-[#f3d38b]" />
+        {/* Minimalist Precision Reticle Brackets */}
+        <div className="pointer-events-none absolute top-2.5 left-2.5 w-3 h-3 border-t border-l border-[rgba(243,211,139,0.6)]" />
+        <div className="pointer-events-none absolute top-2.5 right-2.5 w-3 h-3 border-t border-r border-[rgba(243,211,139,0.6)]" />
+        <div className="pointer-events-none absolute bottom-2.5 left-2.5 w-3 h-3 border-b border-l border-[rgba(243,211,139,0.6)]" />
+        <div className="pointer-events-none absolute bottom-2.5 right-2.5 w-3 h-3 border-b border-r border-[rgba(243,211,139,0.6)]" />
 
-        {/* Tactical Crosshair watermark */}
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-15">
-          <div className="w-12 h-[1px] bg-[#f3d38b]" />
-          <div className="h-12 w-[1px] bg-[#f3d38b] -ml-[6px]" />
-        </div>
-
-        {/* Scrub Overlay Readout (Top-right inside screen) */}
-        <div className="pointer-events-none absolute top-3.5 right-4 flex items-center gap-2 bg-[#070706]/75 px-2 py-0.5 rounded border border-[rgba(243,211,139,0.2)] text-[8px] font-mono text-[#f3d38b]">
-          <span className="text-[#9a8e76]">SEQ</span>
+        {/* Subtle HUD Telemetry Badges */}
+        <div className="pointer-events-none absolute top-3 right-3.5 flex items-center gap-1.5 bg-[#070706]/80 px-2 py-0.5 rounded border border-[rgba(243,211,139,0.22)] text-[8px] font-mono text-[#f3d38b]">
+          <span className="text-[#9a8e76]">FRAME</span>
           <span className="font-bold">{formattedFrame}/40</span>
         </div>
 
-        {/* Active Scrub Telemetry (Bottom-left inside screen) */}
-        <div className="pointer-events-none absolute bottom-3.5 left-4 flex items-center gap-2 bg-[#070706]/75 px-2 py-0.5 rounded border border-[rgba(243,211,139,0.2)] text-[8px] font-mono text-[#d9ccb0]">
-          <span className="text-[#9a8e76]">SCRUB:</span>
-          <span className="text-[#fce9b0] font-semibold">{scrubProgress}%</span>
+        <div className="pointer-events-none absolute bottom-3 left-3.5 flex items-center gap-1.5 bg-[#070706]/80 px-2 py-0.5 rounded border border-[rgba(243,211,139,0.22)] text-[8px] font-mono text-[#d9ccb0]">
+          <span className="text-[#9a8e76]">PROGRESS:</span>
+          <span className="text-[#fce9b0] font-bold">{scrubPercentDisplay}%</span>
         </div>
       </div>
 
-      {/* ── Bottom Telemetry HUD Footer ── */}
-      <div className="px-4 py-2.5 border-t border-[rgba(243,211,139,0.18)] bg-[#0d0a08]/80 text-[#9a8e76] font-mono text-[8px] tracking-tactical flex items-center justify-between">
+      {/* ── Sleek, Compact Telemetry HUD Footer & Progress Line ── */}
+      <div className="relative px-4 py-2 border-t border-[rgba(243,211,139,0.16)] bg-[#130f0c]/90 text-[#9a8e76] font-mono text-[8px] tracking-tactical flex items-center justify-between select-none">
         <div className="flex items-center gap-3">
           <span>VECTOR / 18.4°</span>
           <span className="text-[#f3d38b]">TRACKING / ACTIVE</span>
@@ -241,6 +242,12 @@ export default function MissionControlSequence({ targetRef, className = "" }) {
           <span>LINK:</span>
           <span className="text-[#f6f1e8] font-medium">ESTABLISHED</span>
         </div>
+
+        {/* Real-time 2px Gold Scrub Track at the bottom */}
+        <div
+          className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[rgba(243,211,139,0.3)] to-[#f3d38b] transition-all duration-75"
+          style={{ width: `${scrubPercentDisplay}%` }}
+        />
       </div>
     </div>
   );

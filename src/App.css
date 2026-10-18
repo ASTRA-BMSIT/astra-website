@@ -266,16 +266,17 @@ body {
 .hero-flight:after {
   content: "";
   position: absolute;
-  border: 1px solid rgba(243, 211, 139, 0.3);
+  border: 1px solid rgba(243, 211, 139, 0.25);
   border-radius: 50%;
-  width: min(31vw, 430px);
-  height: min(31vw, 430px);
+  width: min(44vw, 680px);
+  height: min(44vw, 680px);
   animation: orbit 12s ease-in-out infinite;
+  pointer-events: none;
 }
 .hero-flight:after {
-  width: min(23vw, 325px);
-  height: min(23vw, 325px);
-  border-color: rgba(255, 152, 124, 0.35);
+  width: min(35vw, 530px);
+  height: min(35vw, 530px);
+  border-color: rgba(255, 244, 214, 0.2);
   animation-delay: -5s;
   animation-direction: reverse;
 }
