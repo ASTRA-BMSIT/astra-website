@@ -20,17 +20,25 @@ export default function ScrollMorphBackground() {
     let raf = 0;
     const update = () => {
       raf = 0;
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      const p = max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 0.999) : 0;
+      // Progress runs from the Mission section (half in view) to the bottom of the page,
+      // so the backdrop stays on its first slide while the hero is on screen.
+      const mission = document.getElementById('mission');
+      const start = mission ? mission.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.5 : 0;
+      const max = document.documentElement.scrollHeight - window.innerHeight - start;
+      const p = max > 0 ? Math.min(Math.max((window.scrollY - start) / max, 0), 0.999) : 0;
       setIndex(Math.floor(p * ITEMS.length));
     };
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
     update();
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
+    // Page height changes as content/images load, so re-measure when the layout shifts.
+    const ro = new ResizeObserver(onScroll);
+    ro.observe(document.body);
     return () => {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
+      ro.disconnect();
       if (raf) cancelAnimationFrame(raf);
     };
   }, []);

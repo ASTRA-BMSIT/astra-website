@@ -1,66 +1,35 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { 
-  GiRobotLeg, 
-  GiArtificialIntelligence, 
-  GiLockSpy, 
-  GiCctvCamera, 
-  GiProcessor, 
-  GiRadarSweep, 
-  GiDeliveryDrone,
-} from 'react-icons/gi';
+import Reveal from '../components/ui/reveal';
+import { GiArtificialIntelligence, GiProcessor, GiDeliveryDrone } from 'react-icons/gi';
 
-const Event = () => {
-  const domains = [
-    { title: "Robotics & Autonomous Systems in Defence Technology", icon: <GiRobotLeg />, desc: "UGVs, rescue robots, and automated surveillance systems. Emphasis on navigation in unstructured environments and task automation." },
-    { title: "AI & Machine Learning in Defence Technology", icon: <GiArtificialIntelligence />, desc: "Predictive analytics, target recognition, and intelligent command systems. Using data to stay three steps ahead of the adversary." },
-    { title: "Cybersecurity & Ethical Hacking in Defence Technology", icon: <GiLockSpy />, desc: "Offensive and defensive digital operations. Securing communication channels and protecting critical national assets from digital threats." },
-    { title: "IoT & Smart Surveillance in Defence Technology", icon: <GiCctvCamera />, desc: "Networked sensor arrays, smart perimeters, and wearable tech for soldiers. Enhancing situational awareness through connectivity." },
-    { title: "Embedded Systems in Defence Technology", icon: <GiProcessor />, desc: "High-performance computing in compact form factors. Designing the brains behind advanced sensors, munitions, and telemetry." },
-    { title: "Communication Technologies in Defence Technology", icon: <GiRadarSweep />, desc: "SDRs, encrypted protocols, and jam-resistant signals. Ensuring reliable communication in electronic warfare scenarios." },
-    { title: "UAVs & Drones in Defence Technology", icon: <GiDeliveryDrone />, desc: "Multi-rotors, fixed-wings, and swarming tech for recon and logistics. Redefining aerial superiority through student-led innovation." }
-  ];
+const domains = [
+  { title: 'AI & Machine Learning', icon: <GiArtificialIntelligence />, desc: 'Target recognition, predictive analytics and intelligent command systems.' },
+  { title: 'Embedded Systems', icon: <GiProcessor />, desc: 'The compact computing behind advanced sensors and telemetry.' },
+  { title: 'UAVs & Drones', icon: <GiDeliveryDrone />, desc: 'Multi-rotors, fixed-wings and swarming tech for recon and logistics.' },
+];
 
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      exit={{ opacity: 0 }}
-      className="container mx-auto px-6 py-20 holographic-section holographic-grid-zone"
-      id="domains"
-    >
-      {/* Overview */}
-      <section className="mb-24 text-center max-w-3xl mx-auto">
-        <span className="label-badge text-accent-red mb-4 block">Technical Focus Areas</span>
-        <h1 className="text-4xl md:text-5xl font-orbitron mb-8">ASTRA DOMAINS</h1>
-        <p className="text-text-muted text-lg leading-relaxed font-inter">
-          ASTRA brings together students interested in the technologies shaping modern defence and strategic systems. Our domains provide a starting point for hands-on learning, interdisciplinary collaboration, and responsible innovation.
-        </p>
-      </section>
+const Event = () => (
+  <section className="ds-section" id="domains">
+    <div className="ds-wrap">
+      <div className="ds-stamp">Domains<i>.</i></div>
+      <div className="ds-label"><b>03</b>/ 04</div>
+      <Reveal as="h2" className="ds-h2 ds-h2--flush">Three focus areas.</Reveal>
+      <Reveal delay={0.1}>
+        <p className="ds-body" style={{ marginTop: 20 }}>Hands-on learning in the technologies shaping modern defence.</p>
+      </Reveal>
 
-      {/* Domain Cards */}
-      <section className="mb-32">
-        <h2 className="text-2xl font-orbitron mb-12 border-l-4 border-accent-red pl-4">AREAS OF EXPLORATION</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {domains.map((domain, idx) => (
-            <div key={idx} className="bg-bg-surface border border-custom-border p-8 hover:border-accent-red transition-all group">
-              <div className="text-4xl text-accent-red mb-6 group-hover:scale-110 transition-transform">
-                {domain.icon}
-              </div>
-              <h3 className="text-xl font-rajdhani uppercase tracking-badge mb-4 text-text-primary">
-                {domain.title}
-              </h3>
-              <p className="text-text-muted text-sm leading-relaxed border-t border-custom-border pt-4">
-                {domain.desc}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-    </motion.div>
-  );
-};
+      <ol className="ds-route">
+        {domains.map((d, i) => (
+          <Reveal as="li" className="ds-route-card" key={d.title} delay={i * 0.08}>
+            <span className="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <span className="ico">{d.icon}</span>
+            <h3>{d.title}</h3>
+            <p>{d.desc}</p>
+          </Reveal>
+        ))}
+      </ol>
+    </div>
+  </section>
+);
 
 export default Event;

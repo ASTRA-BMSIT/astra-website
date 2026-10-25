@@ -41,9 +41,10 @@ function App() {
 
   return (
     <div className="relative min-h-screen text-text-primary selection:bg-accent-red selection:text-bg-base">
+      <a className="ds-skip" href="#main">Skip to content</a>
       <ScrollMorphBackground />
       <Navbar />
-      <main className="relative z-10">
+      <main id="main" tabIndex={-1} className="relative z-10">
         <AnimatePresence mode="wait">
           <Routes>
             <Route path="/" element={<MainLanding />} />

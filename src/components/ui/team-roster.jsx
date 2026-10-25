@@ -90,9 +90,9 @@ export default function TeamRoster({
         <filter id="ttr-tritone" colorInterpolationFilters="sRGB">
           <feColorMatrix type="matrix" values=".33 .33 .33 0 0  .33 .33 .33 0 0  .33 .33 .33 0 0  0 0 0 1 0" />
           <feComponentTransfer>
-            <feFuncR type="table" tableValues="0.02 0.78 1" />
-            <feFuncG type="table" tableValues="0.01 0.08 0.86" />
-            <feFuncB type="table" tableValues="0.01 0.12 0.82" />
+            <feFuncR type="table" tableValues="0.02 0.40 0.95" />
+            <feFuncG type="table" tableValues="0.01 0.07 0.83" />
+            <feFuncB type="table" tableValues="0.01 0.12 0.83" />
           </feComponentTransfer>
         </filter>
       </svg>
