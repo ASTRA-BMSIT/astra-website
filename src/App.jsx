@@ -4,14 +4,12 @@ import { AnimatePresence } from 'framer-motion';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import ScrollToTop from './components/common/ScrollToTop';
-import OrbitalBackdrop from './components/OrbitalBackdrop';
-import LiquidMetalBackdrop, { MouseLiquidField } from './components/LiquidMetalBackdrop';
+import ScrollMorphBackground from './components/ScrollMorphBackground';
 
 // Pages (to be implemented)
 import Home from './pages/Home';
 import About from './pages/About';
 import Event from './pages/Event';
-import Register from './pages/Register';
 import Contact from './pages/Contact';
 
 const MainLanding = () => {
@@ -20,7 +18,6 @@ const MainLanding = () => {
       <Home />
       <About />
       <Event />
-      <Register />
       <Contact />
     </>
   );
@@ -43,17 +40,15 @@ function App() {
   }, [hash]);
 
   return (
-    <div className="relative min-h-screen text-text-primary selection:bg-accent-orange selection:text-bg-base">
-      <div className="hex-grid-overlay opacity-30" />
-      <LiquidMetalBackdrop className="liquid-metal--page" />
-      <MouseLiquidField />
-      <OrbitalBackdrop />
+    <div className="relative min-h-screen text-text-primary selection:bg-accent-red selection:text-bg-base">
+      <a className="ds-skip" href="#main">Skip to content</a>
+      <ScrollMorphBackground />
       <Navbar />
-      <main className="relative z-10">
+      <main id="main" tabIndex={-1} className="relative z-10">
         <AnimatePresence mode="wait">
           <Routes>
             <Route path="/" element={<MainLanding />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/register" element={<Navigate to="/" replace />} />
             {/* Redirect legacy routes to anchor points */}
             <Route path="/about" element={<Navigate to="/#about" replace />} />
             <Route path="/domains" element={<Navigate to="/#domains" replace />} />

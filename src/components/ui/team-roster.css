@@ -1,0 +1,32 @@
+.ttr{position:relative;isolation:isolate;overflow:hidden;width:100%;height:min(100svh,880px);min-height:620px;background:transparent;color:#f7f9fa;--g:14px;--ease:cubic-bezier(.23,1,.32,1)}
+.ttr-field{position:absolute;inset:0;z-index:-1;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 22%,#000 78%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 22%,#000 78%,transparent 100%);background:radial-gradient(60% 70% at 38% 40%,#2c2c2e 0%,#18181a 45%,transparent 80%),linear-gradient(98deg,#090909 0%,#0e0e0f 22%,transparent 50%),linear-gradient(0deg,rgba(5,5,5,.6),transparent 55%),#0e0e0f}
+.ttr-in{display:grid;grid-template-columns:minmax(0,42fr) minmax(0,58fr);height:100%}
+.ttr-copy{position:relative;z-index:5;display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(20px,3.2vw,48px);pointer-events:none}
+.ttr-eyebrow{font:900 clamp(20px,3vw,40px)/1 Roboto,sans-serif;letter-spacing:-.01em;text-transform:uppercase;color:#b3394a}
+.ttr-title{margin:.1em 0 0;font:900 clamp(60px,9vw,160px)/.84 Roboto,sans-serif;letter-spacing:-.035em;text-transform:uppercase;text-shadow:0 .02em .14em rgba(0,0,0,.4)}
+.ttr-title span{display:block}
+.ttr-intro{margin:20px 0 0;max-width:38ch;line-height:1.55;color:rgba(245,238,238,.85);pointer-events:auto}
+.ttr-pause{pointer-events:auto;align-self:flex-start;margin-top:22px;height:38px;padding:0 16px;border:1px solid rgba(245,238,238,.5);background:transparent;color:inherit;font:700 11px "DM Mono",monospace;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s}
+.ttr-pause:hover,.ttr-pause:focus-visible{background:#f7f9fa;color:#090909;outline:none}
+.ttr-wall{display:grid;grid-template-columns:repeat(var(--ttr-cols),minmax(0,1fr));gap:var(--g);padding:0 clamp(20px,3.2vw,48px) 0 12px;height:100%;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(180deg,transparent,#000 6%,#000 94%,transparent)}
+.ttr-col{min-width:0}
+.ttr-track{display:flex;flex-direction:column;will-change:transform;animation:ttr-up var(--ttr-dur) linear infinite}
+.ttr-col[data-dir=down] .ttr-track{animation-name:ttr-down}
+.ttr[data-paused] .ttr-track,.ttr-wall:hover .ttr-track,.ttr-wall:focus-within .ttr-track{animation-play-state:paused}
+@keyframes ttr-up{to{transform:translateY(-50%)}}
+@keyframes ttr-down{from{transform:translateY(-50%)}to{transform:translateY(0)}}
+.ttr-card{position:relative;margin:0 0 var(--g);aspect-ratio:3/4;border-radius:3px;outline:none;transition:transform .26s var(--ease)}
+.ttr-photo{position:absolute;inset:0;overflow:hidden;border-radius:3px;background:#18181a}
+.ttr-photo img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;filter:none;transition:filter .3s,transform .3s var(--ease)}
+.ttr-plate{position:absolute;inset:0;display:grid;place-items:center;font:900 clamp(40px,6vw,90px) Roboto,sans-serif;background:radial-gradient(90% 70% at 50% 35%,#3a3a3d,#18181a 70%,#090909)}
+.ttr-chip{position:absolute;left:8px;top:8px;padding:4px 8px;background:#090909;color:#f7f9fa;font:700 10px "DM Mono",monospace;letter-spacing:.08em;text-transform:uppercase;border-radius:2px;transition:opacity .2s}
+.ttr-panel{position:absolute;left:0;right:0;bottom:0;padding:34px 12px 12px;display:flex;flex-direction:column;gap:3px;border-radius:0 0 3px 3px;background:linear-gradient(0deg,rgba(5,5,5,.92),transparent);opacity:0;transform:translateY(8px);transition:opacity .25s,transform .25s var(--ease)}
+.ttr-panel b{font:800 clamp(13px,1.3vw,17px)/1.1 Roboto,sans-serif;text-transform:uppercase}
+.ttr-panel span{font:600 11px "DM Mono",monospace;color:#c9cacd;letter-spacing:.06em;text-transform:uppercase}
+.ttr-card:hover,.ttr-card:focus-visible{transform:scale(1.04);z-index:2}
+.ttr-card:hover .ttr-photo img,.ttr-card:focus-visible .ttr-photo img{filter:none;transform:scale(1.05)}
+.ttr-card:hover .ttr-panel,.ttr-card:focus-visible .ttr-panel{opacity:1;transform:none}
+.ttr-card:hover .ttr-chip{opacity:0}
+.ttr-card:focus-visible{box-shadow:0 0 0 2px #090909,0 0 0 4px #f7f9fa}
+@media(max-width:900px){.ttr{height:auto;min-height:0}.ttr-in{grid-template-columns:1fr;grid-template-rows:auto 520px}.ttr-copy{padding-top:90px}.ttr-wall{--ttr-cols:2!important}.ttr-col:nth-child(3){display:none}}
+@media(prefers-reduced-motion:reduce){.ttr-track{animation:none}}
