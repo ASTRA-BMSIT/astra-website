@@ -1,43 +1,43 @@
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Nata+Sans:wght@100..900&family=Roboto:wght@100..900&display=swap');
 
 @theme {
-  --color-bg-base: #070706;
-  --color-bg-surface: #130f0c;
-  --color-bg-elevated: #1d1914;
-  --color-accent-orange: #f3d38b;
-  --color-accent-amber: #fff4d6;
-  --color-brand-devfolio: #d4af67;
-  --color-text-primary: #f6f1e8;
-  --color-text-muted: #d9ccb0;
-  --color-custom-border: rgba(218, 179, 82, 0.25);
+  --color-bg-base: #050505;
+  --color-bg-surface: #0e0b0b;
+  --color-bg-elevated: #171212;
+  --color-accent-red: #e11d2e;
+  --color-accent-ember: #ff4d4d;
+  --color-brand-devfolio: #b3121f;
+  --color-text-primary: #f5eeee;
+  --color-text-muted: #c4b4b4;
+  --color-custom-border: rgba(225,29,46, 0.25);
 
-  --font-orbitron: "Space Grotesk", sans-serif;
-  --font-rajdhani: "DM Sans", sans-serif;
-  --font-inter: "DM Sans", sans-serif;
+  --font-orbitron: "Roboto", sans-serif;
+  --font-rajdhani: "Nata Sans", sans-serif;
+  --font-inter: "Nata Sans", sans-serif;
 
   --tracking-tactical: 0.08em;
   --tracking-badge: 0.12em;
 
   @keyframes glow {
-    0%, 100% { box-shadow: 0 0 4px rgba(243, 211, 139, 0.18); }
-    50% { box-shadow: 0 0 14px rgba(243, 211, 139, 0.5); }
+    0%, 100% { box-shadow: 0 0 4px rgba(225,29,46, 0.18); }
+    50% { box-shadow: 0 0 14px rgba(225,29,46, 0.5); }
   }
 }
 
 /* Base Styles */
 @layer base {
   :root {
-    --bg-base: #070706;
-    --bg-surface: #130f0c;
-    --bg-elevated: #1d1914;
-    --accent-orange: #f3d38b;
-    --accent-amber: #fff4d6;
-    --brand-devfolio: #d4af67;
-    --text-primary: #f6f1e8;
-    --text-muted: #d9ccb0;
-    --border: rgba(218, 179, 82, 0.25);
+    --bg-base: #050505;
+    --bg-surface: #0e0b0b;
+    --bg-elevated: #171212;
+    --accent-red: #e11d2e;
+    --accent-ember: #ff4d4d;
+    --brand-devfolio: #b3121f;
+    --text-primary: #f5eeee;
+    --text-muted: #c4b4b4;
+    --border: rgba(225,29,46, 0.25);
   }
 
   html {
@@ -45,7 +45,7 @@
   }
 
   body {
-    background: #070706;
+    background: #050505;
     color: var(--text-primary);
     font-family: var(--font-inter);
     margin: 0;
@@ -66,8 +66,12 @@
   }
 
   h3, h4 {
-    font-family: var(--font-rajdhani);
+    font-family: var(--font-orbitron);
     font-weight: 600;
+  }
+
+  h5, h6 {
+    font-family: var(--font-orbitron);
   }
 }
 
@@ -115,7 +119,7 @@ body::after {
   inset: 0;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(rgba(243,211,139,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(243,211,139,.04) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(225,29,46,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(225,29,46,.04) 1px, transparent 1px);
   background-size: 48px 48px;
   pointer-events: none;
   z-index: 0;
@@ -153,14 +157,14 @@ body::after {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #FF6B00;
+  background: #e11d2e;
 }
 
 /* ASTRA redesign */
-::selection { background: var(--accent-orange); color: var(--bg-base); }
+::selection { background: var(--accent-red); color: var(--bg-base); }
 button { font: inherit; }
 
 /* Hyper redesign overrides */
 body { background:#050505; }
 body::after { opacity:.025; }
-::selection { background:#FF6B00; color:#050505; }
+::selection { background:#e11d2e; color:#050505; }

@@ -33,10 +33,9 @@ const ScrollToTop = () => {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.5 }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-40 w-12 h-12 border border-accent-orange bg-bg-base/80 backdrop-blur-sm text-accent-orange flex items-center justify-center hover:bg-accent-orange hover:text-bg-base transition-all group"
+          className="ds-top group" aria-label="Back to top"
         >
           <HiArrowUp className="text-xl group-hover:-translate-y-1 transition-transform" />
-          <div className="absolute -inset-1 border border-accent-orange/20 animate-ping rounded-none opacity-20" />
         </motion.button>
       )}
     </AnimatePresence>
